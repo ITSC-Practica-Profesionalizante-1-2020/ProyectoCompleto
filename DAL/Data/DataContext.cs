@@ -15,6 +15,7 @@ namespace DAL.Data
     {
         public DataContext()
         {
+            //comentario
 
         }
         public DataContext(DbContextOptions<DataContext> options) : base(options)
