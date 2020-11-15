@@ -4,10 +4,14 @@ namespace SharedModels.UserService
 {
     public class UserEMPRESA : EntityBase
     {
-    
+
         [Required]
-        public Empresa IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
         [Required]
-        public Cliente IdCliente { get; set; }
+        public int IdCliente { get; set; }
+        [Required]
+        public Empresa Empresa { get; set; }
+        [Required]
+        public Cliente Cliente { get; set; }
     }
 }

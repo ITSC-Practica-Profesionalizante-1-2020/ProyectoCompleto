@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201113010620_15")]
+    partial class _15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,9 +280,6 @@ namespace DAL.Migrations
                     b.Property<string>("NombreSala")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordSala")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<TimeSpan?>("TiempoAcumuladoUso")
                         .HasColumnType("time");
 
@@ -308,7 +307,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("Hora_Fecha_Envio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParticipanteId")
+                    b.Property<int>("ParticipanteId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Privado")
@@ -324,42 +323,7 @@ namespace DAL.Migrations
                     b.ToTable("Mensajes");
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaAlta")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaBaja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Rol")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("Participantes");
-                });
-
-            modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
+            modelBuilder.Entity("SharedModels.RoomService.SalaUserEMPRESA", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -371,6 +335,12 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Id_Participante")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_Sala")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ParticipanteId")
                         .HasColumnType("int");
@@ -384,7 +354,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("SalaId");
 
-                    b.ToTable("SalaParticipante");
+                    b.ToTable("salaUserEMPRESAS");
                 });
 
             modelBuilder.Entity("SharedModels.StreamingService.ConferenceRecordFile", b =>
@@ -434,6 +404,9 @@ namespace DAL.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DuenioId")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("Duracion")
                         .HasColumnType("time");
 
@@ -444,6 +417,8 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DuenioId");
 
                     b.HasIndex("SalaId");
 
@@ -468,6 +443,10 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -496,6 +475,8 @@ namespace DAL.Migrations
                     b.HasIndex("IdentityUsuarioId");
 
                     b.ToTable("Clientes");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Cliente");
                 });
 
             modelBuilder.Entity("SharedModels.UserService.Empresa", b =>
@@ -545,6 +526,30 @@ namespace DAL.Migrations
                     b.HasIndex("IdentityUsuarioId");
 
                     b.ToTable("Empresas");
+                });
+
+            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
+                {
+                    b.HasBaseType("SharedModels.UserService.Cliente");
+
+                    b.Property<DateTime>("FechaAlta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaBaja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rol")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("VideoRoomId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("VideoRoomId");
+
+                    b.HasDiscriminator().HasValue("Participante");
                 });
 
             modelBuilder.Entity("Asistencia", b =>
@@ -609,17 +614,12 @@ namespace DAL.Migrations
                 {
                     b.HasOne("SharedModels.RoomService.Participante", "Participante")
                         .WithMany()
-                        .HasForeignKey("ParticipanteId");
+                        .HasForeignKey("ParticipanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
-                {
-                    b.HasOne("SharedModels.UserService.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId");
-                });
-
-            modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
+            modelBuilder.Entity("SharedModels.RoomService.SalaUserEMPRESA", b =>
                 {
                     b.HasOne("SharedModels.RoomService.Participante", "Participante")
                         .WithMany()
@@ -643,6 +643,10 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("SharedModels.StreamingService.VideoRoom", b =>
                 {
+                    b.HasOne("SharedModels.RoomService.Participante", "Duenio")
+                        .WithMany()
+                        .HasForeignKey("DuenioId");
+
                     b.HasOne("Sala", "Sala")
                         .WithMany()
                         .HasForeignKey("SalaId");
@@ -660,6 +664,13 @@ namespace DAL.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUsuario")
                         .WithMany()
                         .HasForeignKey("IdentityUsuarioId");
+                });
+
+            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
+                {
+                    b.HasOne("SharedModels.StreamingService.VideoRoom", null)
+                        .WithMany("Participantes")
+                        .HasForeignKey("VideoRoomId");
                 });
 #pragma warning restore 612, 618
         }

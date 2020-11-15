@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RoomService.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AsistenciaController : ControllerBase
     {
@@ -19,32 +19,7 @@ namespace RoomService.Controllers
         {
             this.context = context;
         }
-      
-       
+    
 
-        // GET api/<AsistenciaController>/5
-        [HttpGet("{id}")]
-        public Asistencia Get(int id)
-        {
-            return context.Asistencias.FirstOrDefault(x => x.Id == 1);
-        }
-
-        // POST api/<AsistenciaController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<AsistenciaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AsistenciaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

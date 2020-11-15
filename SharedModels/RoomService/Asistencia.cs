@@ -10,4 +10,5 @@ public class Asistencia : EntityBase
     public DateTime? FechaIngreso { get; set; }
     public DateTime? FechaEgreso { get; set; }
     public Roles Rol_Usuario { get; set; }
+
 }

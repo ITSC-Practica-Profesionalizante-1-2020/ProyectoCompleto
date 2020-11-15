@@ -16,7 +16,6 @@ namespace UserService.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly DataContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
 
         public ClientesController(DataContext context)
         {
@@ -46,9 +45,9 @@ namespace UserService.Controllers
 
         // PUT: api/Clientes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(string id, Cliente cliente)
         {
-            if (id.ToString().Equals(cliente.Id))
+            if (id.ToString().Equals(cliente.IdentityUsuario.Id))
             {
                 return BadRequest();
             }
@@ -81,7 +80,7 @@ namespace UserService.Controllers
             _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return CreatedAtAction("GetCliente", new { id = cliente.IdentityUsuario.Id }, cliente);
         }
 
         // DELETE: api/Clientes/5
@@ -100,9 +99,9 @@ namespace UserService.Controllers
             return cliente;
         }
 
-        private bool ClienteExists(int id)
+        private bool ClienteExists(string id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.IdentityUsuario.Id == id);
         }
     }
 }

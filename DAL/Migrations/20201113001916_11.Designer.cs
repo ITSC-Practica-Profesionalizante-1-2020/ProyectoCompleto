@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201113001916_11")]
+    partial class _11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,7 +259,7 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("ControlAsistencia")
+                    b.Property<bool>("ControlAsistencia")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("DateCreated")
@@ -266,7 +268,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("EsPersistente")
+                    b.Property<bool>("EsPersistente")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("FechaBaja")
@@ -281,8 +283,8 @@ namespace DAL.Migrations
                     b.Property<string>("PasswordSala")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan?>("TiempoAcumuladoUso")
-                        .HasColumnType("time");
+                    b.Property<DateTime?>("TiempoAcumuladoUso")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -308,7 +310,7 @@ namespace DAL.Migrations
                     b.Property<DateTime>("Hora_Fecha_Envio")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParticipanteId")
+                    b.Property<int>("ParticipanteId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Privado")
@@ -331,14 +333,14 @@ namespace DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaAlta")
                         .HasColumnType("datetime2");
@@ -354,12 +356,10 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
-
                     b.ToTable("Participantes");
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
+            modelBuilder.Entity("SharedModels.RoomService.SalaUserEMPRESA", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -371,6 +371,12 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Id_Sala")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id_UserEMPRESA")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ParticipanteId")
                         .HasColumnType("int");
@@ -384,7 +390,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("SalaId");
 
-                    b.ToTable("SalaParticipante");
+                    b.ToTable("salaUserEMPRESAS");
                 });
 
             modelBuilder.Entity("SharedModels.StreamingService.ConferenceRecordFile", b =>
@@ -468,8 +474,10 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Direccion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EmpresaId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("FechaNac")
                         .HasColumnType("datetime2");
@@ -477,23 +485,30 @@ namespace DAL.Migrations
                     b.Property<string>("Foto")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityUsuarioId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("Localidad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreCompleto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pais")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Provincia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityUsuarioId");
+                    b.HasIndex("EmpresaId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Clientes");
                 });
@@ -519,32 +534,47 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaInicioActividades")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IdentityUsuarioId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreEmpresa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pais")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Provincia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RazonSocial")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
+
+                    b.ToTable("Empresas");
+                });
+
+            modelBuilder.Entity("SharedModels.UserService.UserEMPRESA", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("VideoRoomId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdentityUsuarioId");
+                    b.HasIndex("VideoRoomId");
 
-                    b.ToTable("Empresas");
+                    b.ToTable("UserEMPRESA");
                 });
 
             modelBuilder.Entity("Asistencia", b =>
@@ -609,30 +639,25 @@ namespace DAL.Migrations
                 {
                     b.HasOne("SharedModels.RoomService.Participante", "Participante")
                         .WithMany()
-                        .HasForeignKey("ParticipanteId");
+                        .HasForeignKey("ParticipanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
-                {
-                    b.HasOne("SharedModels.UserService.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId");
-                });
-
-            modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
+            modelBuilder.Entity("SharedModels.RoomService.SalaUserEMPRESA", b =>
                 {
                     b.HasOne("SharedModels.RoomService.Participante", "Participante")
-                        .WithMany()
+                        .WithMany("SalaUserEMPRESAS")
                         .HasForeignKey("ParticipanteId");
 
                     b.HasOne("Sala", "Sala")
-                        .WithMany()
+                        .WithMany("SalaUserEMPRESAS")
                         .HasForeignKey("SalaId");
                 });
 
             modelBuilder.Entity("SharedModels.StreamingService.ConferenceRecordFile", b =>
                 {
-                    b.HasOne("SharedModels.RoomService.Participante", "Duenio")
+                    b.HasOne("SharedModels.UserService.UserEMPRESA", "Duenio")
                         .WithMany()
                         .HasForeignKey("DuenioId");
 
@@ -650,16 +675,20 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("SharedModels.UserService.Cliente", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUsuario")
+                    b.HasOne("SharedModels.UserService.Empresa", null)
+                        .WithMany("ListaClientes")
+                        .HasForeignKey("EmpresaId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
                         .WithMany()
-                        .HasForeignKey("IdentityUsuarioId");
+                        .HasForeignKey("UsuarioId");
                 });
 
-            modelBuilder.Entity("SharedModels.UserService.Empresa", b =>
+            modelBuilder.Entity("SharedModels.UserService.UserEMPRESA", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUsuario")
-                        .WithMany()
-                        .HasForeignKey("IdentityUsuarioId");
+                    b.HasOne("SharedModels.StreamingService.VideoRoom", null)
+                        .WithMany("Participantes")
+                        .HasForeignKey("VideoRoomId");
                 });
 #pragma warning restore 612, 618
         }

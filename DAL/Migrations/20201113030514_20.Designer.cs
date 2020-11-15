@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201113030514_20")]
+    partial class _20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -349,12 +351,17 @@ namespace DAL.Migrations
                     b.Property<int>("Rol")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SalaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("SalaId");
 
                     b.ToTable("Participantes");
                 });
@@ -617,6 +624,10 @@ namespace DAL.Migrations
                     b.HasOne("SharedModels.UserService.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId");
+
+                    b.HasOne("Sala", null)
+                        .WithMany("Participantes")
+                        .HasForeignKey("SalaId");
                 });
 
             modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>

@@ -4,14 +4,16 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201113025617_19")]
+    partial class _19
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,41 +326,6 @@ namespace DAL.Migrations
                     b.ToTable("Mensajes");
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaAlta")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaBaja")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Rol")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.ToTable("Participantes");
-                });
-
             modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
                 {
                     b.Property<int>("Id")
@@ -471,6 +438,10 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("FechaNac")
                         .HasColumnType("datetime2");
 
@@ -496,6 +467,8 @@ namespace DAL.Migrations
                     b.HasIndex("IdentityUsuarioId");
 
                     b.ToTable("Clientes");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Cliente");
                 });
 
             modelBuilder.Entity("SharedModels.UserService.Empresa", b =>
@@ -545,6 +518,30 @@ namespace DAL.Migrations
                     b.HasIndex("IdentityUsuarioId");
 
                     b.ToTable("Empresas");
+                });
+
+            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
+                {
+                    b.HasBaseType("SharedModels.UserService.Cliente");
+
+                    b.Property<DateTime>("FechaAlta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaBaja")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rol")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SalaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("SalaId");
+
+                    b.HasDiscriminator().HasValue("Participante");
                 });
 
             modelBuilder.Entity("Asistencia", b =>
@@ -612,13 +609,6 @@ namespace DAL.Migrations
                         .HasForeignKey("ParticipanteId");
                 });
 
-            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
-                {
-                    b.HasOne("SharedModels.UserService.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId");
-                });
-
             modelBuilder.Entity("SharedModels.RoomService.SalaParticipante", b =>
                 {
                     b.HasOne("SharedModels.RoomService.Participante", "Participante")
@@ -660,6 +650,13 @@ namespace DAL.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUsuario")
                         .WithMany()
                         .HasForeignKey("IdentityUsuarioId");
+                });
+
+            modelBuilder.Entity("SharedModels.RoomService.Participante", b =>
+                {
+                    b.HasOne("Sala", null)
+                        .WithMany("Participantes")
+                        .HasForeignKey("SalaId");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,19 +5,17 @@ using System.Text;
 
 namespace SharedModels.UserService
 {
-    public class Empresa : EntityBase
+    public class Empresa : Usuario
     {
         [Required]
-        public string NombreEmpresa { get; set; }
+        public string RazonSocial { get; set; }
         [Required]
         public string CUIT { get; set; } //CUIT EMPRESARIAL 
+        public DateTime FechaInicioActividades { get; set; }
         [Required]
-        public string Pais { get; set; }
-        [Required]
-        public string Provincia { get; set; }
-        [Required]
-        public string Direccion { get; set; }
+       
         public string Logo { get; set; }
+
 
     }
 }

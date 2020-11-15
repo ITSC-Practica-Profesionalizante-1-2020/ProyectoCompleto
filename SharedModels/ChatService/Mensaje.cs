@@ -7,10 +7,12 @@ using System.Text;
 namespace SharedModels.ChatService
 {
     public class Mensaje : EntityBase
+
     {
-        public int ParticipanteId { get; set; }
-        [ForeignKey("ParticipanteId")]
-        public Participante Participante { get; set; }
+        public Participante Emisor { get; set; }
+        public Participante? Receptor { get; set; }
+        public Sala Sala { get; set; }
+
         public string Contenido { get; set; }
         public DateTime Hora_Fecha_Envio { get; set; }
         public string Url_Archivo { get; set; }
