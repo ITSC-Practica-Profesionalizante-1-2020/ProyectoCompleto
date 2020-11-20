@@ -7,13 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{E621CA21-4540-412A-B366-A1376E33AB01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomService", "RoomService\RoomService.csproj", "{0106C048-4FCC-473F-A0B1-ACB944194E81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomService", "RoomService\RoomService.csproj", "{0106C048-4FCC-473F-A0B1-ACB944194E81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService", "ChatService\ChatService.csproj", "{A9CA11CC-70C4-437C-99D3-C239C70F5A07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatService", "ChatService\ChatService.csproj", "{A9CA11CC-70C4-437C-99D3-C239C70F5A07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamingService", "StreamingService\StreamingService.csproj", "{2AC04BAD-AE0B-4726-8F3A-1CF5DB7BB452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamingService", "StreamingService\StreamingService.csproj", "{2AC04BAD-AE0B-4726-8F3A-1CF5DB7BB452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService", "UserService\UserService.csproj", "{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\UserService.csproj", "{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamingService2", "StreamingService2\StreamingService2.csproj", "{B0D04B3E-8495-412C-99AA-4F2C4DA75048}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
