@@ -40,7 +40,6 @@ namespace RoomService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
