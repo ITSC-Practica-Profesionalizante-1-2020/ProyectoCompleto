@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamingService", "Streami
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "UserService\UserService.csproj", "{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamingService2", "StreamingService2\StreamingService2.csproj", "{B0D04B3E-8495-412C-99AA-4F2C4DA75048}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B6FB6E-259E-4631-93CC-3EB60D1F4B33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0D04B3E-8495-412C-99AA-4F2C4DA75048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
