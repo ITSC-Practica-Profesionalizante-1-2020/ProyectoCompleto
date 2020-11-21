@@ -1,0 +1,26 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<br />
+<h1>Bienvenido API Chat</h1>
+
+<form>
+    <br />
+    <label for="Sala">Ingrese ID de Sala:</label>
+    <input for="Sala" class="form-text" @bind="@salaid" />
+    <br />
+    <label for="Part">Ingrese ID de Participante:</label>
+    <input for="Part" class="form-text" @bind="@participanteid" />
+    <br />
+    <input type="button" class="btn btn-primary" @onclick="@NavegarChat" value="Ingresar" />
+</form>
+
+@code{
+    int salaid { get; set; }
+    int participanteid { get; set; }
+
+    private void NavegarChat()
+    {
+        NavigationManager.NavigateTo("/chat/" + salaid + "/" + participanteid);
+    }
+}

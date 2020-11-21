@@ -1,0 +1,126 @@
+﻿@page "/chat/{salaid:int}/{participanteid:int}"
+
+@using ChatSignalRBlazor.Shared
+@using Microsoft.AspNetCore.SignalR.Client
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="row">
+    <div class="col-6">
+        <h2>Sala: @salaid </h2>
+    </div>
+    <div class="col-auto">
+        <h2>Participante: @participanteid</h2>
+    </div>
+
+    <div class="col-auto">
+        <input type="button" class="btn btn-danger" @onclick="NavegarIndex" value="Salir" />
+    </div>
+</div>
+
+
+<hr />
+<h4>Mensajes </h4>
+@if (mensajes == null)
+{
+    <p>Cargando mensajes...</p>
+}
+else
+{
+    @foreach (var mensaje in mensajes)
+    {
+
+        <li style="list-style-type:none"> <b>@mensaje.ParticipanteId: </b>@mensaje.Contenido  @mensaje.Fecha_Hora </li>
+
+        if (mensaje.ParticipanteId == participanteid)
+        {
+            <p style="padding-left:80px"><a href="/chat/borrar/@mensaje.SalaId/@mensaje.ParticipanteId/@mensaje.Id" style="color:darkred"><b> ╚>Eliminar mensaje</b></a></p>
+        }
+    }
+}
+
+<hr>
+<div class="row">
+    <div class="col-md-10">
+        <div class="form-group">
+            <input for="Name" class="form-control" @bind="@mensajeCrea.Contenido" />
+        </div>
+    </div>
+
+    <div class="col-md-auto">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@CreaMensaje" value="Enviar" />
+        </div>
+    </div>
+</div>
+
+
+@code {
+    Mensaje[] mensajes;
+    Mensaje mensajeCrea = new Mensaje();
+
+    private HubConnection hubConnection;
+
+    [Parameter]
+    public int salaid { get; set; }
+    [Parameter]
+    public int participanteid { get; set; }
+
+    private void NavegarIndex()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/broadcastHub"))
+            .Build();
+
+        hubConnection.On("ReceiveMessage", () =>
+        {
+            CallLoadData();
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+
+        await LoadData();
+    }
+
+    private void CallLoadData()
+    {
+        Task.Run(async () =>
+        {
+            await LoadData();
+        });
+    }
+
+    protected async Task LoadData()
+    {
+        mensajes = await Http.GetFromJsonAsync<Mensaje[]>("api/mensajes/bysala/" + salaid);
+        StateHasChanged();
+    }
+
+    public bool IsConnected =>
+        hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    protected async Task CreaMensaje()
+    {
+        mensajeCrea.ParticipanteId = participanteid;
+        mensajeCrea.SalaId = salaid;
+        mensajeCrea.Fecha_Hora = DateTime.Now;
+
+        await Http.PostAsJsonAsync("api/mensajes", mensajeCrea);
+        if (IsConnected) await SendMessage();
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+}

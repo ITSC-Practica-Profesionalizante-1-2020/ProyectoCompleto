@@ -1,0 +1,58 @@
+﻿@page "/chat/borrar/{salaid:int}/{partid:int}/{idmsj:int}"
+
+@using Microsoft.AspNetCore.SignalR.Client
+@using ChatSignalRBlazor.Shared
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<br />
+<h5 onchange="@BorraMensaje(idmsj)">Su mensaje ha sido borrado con éxito! </h5>
+<br />
+<input type="button" class="btn btn-success" style="background-color:lawngreen; color:black" @onclick="@NavegarChat" value="Volver atrás" />
+
+@code {
+    [Parameter]
+    public int idmsj { get; set; }
+
+    [Parameter]
+    public int partid { get; set; }
+    [Parameter]
+    public int salaid { get; set; }
+
+    Mensaje mensaje = new Mensaje();
+
+    private HubConnection hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        mensaje = await Http.GetFromJsonAsync<Mensaje>("api/mensajes/" + idmsj);
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/broadcastHub"))
+            .Build();
+
+        await hubConnection.StartAsync();
+    }
+
+    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+
+    public bool IsConnected =>
+    hubConnection.State == HubConnectionState.Connected;
+
+    public void Dispose()
+    {
+        _ = hubConnection.DisposeAsync();
+    }
+
+    protected async Task BorraMensaje(int idmsj)
+    {
+        await Http.DeleteAsync("api/mensajes/" + idmsj);
+        if (IsConnected) await SendMessage();
+    }
+
+    public void NavegarChat()
+    {
+        NavigationManager.NavigateTo("/chat/" + salaid + "/" + partid);
+    }
+}
