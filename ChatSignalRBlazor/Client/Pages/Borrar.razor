@@ -35,10 +35,10 @@
         await hubConnection.StartAsync();
     }
 
-    Task SendMessage() => hubConnection.SendAsync("SendMessage");
+    //Task SendMessage() => hubConnection.SendAsync("SendMessage");
 
-    public bool IsConnected =>
-    hubConnection.State == HubConnectionState.Connected;
+    //public bool IsConnected =>
+    //hubConnection.State == HubConnectionState.Connected;
 
     public void Dispose()
     {
@@ -48,7 +48,7 @@
     protected async Task BorraMensaje(int idmsj)
     {
         await Http.DeleteAsync("api/mensajes/" + idmsj);
-        if (IsConnected) await SendMessage();
+        //if (IsConnected) await SendMessage();
     }
 
     public void NavegarChat()

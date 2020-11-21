@@ -68,6 +68,7 @@ namespace ChatSignalRBlazor.Server.Controllers
             _context.Mensaje.Add(mensaje);
             try
             {
+                mensaje.Fecha_Hora = DateTime.Now;
                 await _context.SaveChangesAsync();
                 await _hubContext.Clients.All.SendAsync("ReceiveMessage");
             }
