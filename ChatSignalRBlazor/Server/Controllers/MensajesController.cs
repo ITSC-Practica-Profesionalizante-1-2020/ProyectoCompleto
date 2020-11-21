@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChatSignalRBlazor.Server.Data;
 using ChatSignalRBlazor.Shared;
+using ChatSignalRBlazor.Server.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ChatSignalRBlazor.Server.Controllers
 {
@@ -16,9 +18,13 @@ namespace ChatSignalRBlazor.Server.Controllers
     {
         private readonly ChatSignalRBlazorServerContext _context;
 
-        public MensajesController(ChatSignalRBlazorServerContext context)
+        private readonly IHubContext<BroadcastHub> _hubContext;
+
+        public MensajesController(ChatSignalRBlazorServerContext context, IHubContext<BroadcastHub> hubContext)
         {
             _context = context;
+
+            _hubContext = hubContext;
         }
 
         // GET: api/mensajes
@@ -63,6 +69,7 @@ namespace ChatSignalRBlazor.Server.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage");
             }
             catch (DbUpdateException)
             {
@@ -91,6 +98,8 @@ namespace ChatSignalRBlazor.Server.Controllers
 
             _context.Mensaje.Remove(mensaje);
             await _context.SaveChangesAsync();
+
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage");
 
             return mensaje;
         }
