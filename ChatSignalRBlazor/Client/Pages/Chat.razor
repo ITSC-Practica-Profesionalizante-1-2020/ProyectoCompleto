@@ -6,8 +6,8 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-<div class="row" style="position:sticky; top:5px; background: #d0c1ff">
-    <div class="col-6">
+<div class="row" style="position:sticky; top:5px; background: #c1c1ff">
+    <div class="col-7">
         <h3>Sala: @salaid </h3>
     </div>
     <div class="col-auto">
@@ -20,8 +20,7 @@
 </div>
 
 
-<hr />
-<h4>Mensajes </h4>
+<br />
 @if (mensajes == null)
 {
     <p>Cargando mensajes...</p>
@@ -33,8 +32,8 @@ else
 
         if (mensaje.ParticipanteId == participanteid)
         {
-            <div class="container" style="margin-right:100px; max-width:400px">
-                <p style="line-height:100%; background-color:lightgreen; border-radius:10px">
+            <div class="container" style="margin-right:100px; max-width:250px">
+                <p style="line-height:100%; background-color:lightgreen; border-radius:10px; overflow-wrap:break-word">
                     <b>Tú: </b>@mensaje.Contenido
                     <br />
                     <a href="/chat/borrar/@mensaje.SalaId/@mensaje.ParticipanteId/@mensaje.Id" style="color:darkred"><b> <font size="2">X Eliminar</font></b></a> <font size=1>@mensaje.Fecha_Hora</font>
@@ -43,8 +42,8 @@ else
         }
         else
         {
-            <div class="container" style="margin-left:5px; max-width:400px">
-                <p style="line-height:100%; background-color:lightblue; border-radius:10px">
+            <div class="container" style="margin-left:5px; max-width:250px">
+                <p style="line-height:100%; background-color:lightblue; border-radius:10px; overflow-wrap:break-word">
                     <b>@mensaje.ParticipanteId: </b>@mensaje.Contenido
                     <br />
                     <font size=1>@mensaje.Fecha_Hora</font>
@@ -54,17 +53,16 @@ else
     }
 }
 
-<hr>
 <div class="row" style="position:sticky; bottom:5px; background:inherit">
     <div class="col-md-10">
         <div class="form-group">
-            <input for="Name" class="form-control" @bind="@mensajeCrea.Contenido" />
+            <input for="Name" class="form-control" style="border-radius:8px" @bind="@mensajeCrea.Contenido" />
         </div>
     </div>
 
     <div class="col-md-auto">
         <div class="form-group">
-            <input type="button" class="btn btn-primary" @onclick="@CreaMensaje" value="Enviar" />
+            <input type="button" class="btn btn-primary" style="border-radius:8px" @onclick="@CreaMensaje" value="Enviar" />
         </div>
     </div>
 </div>
