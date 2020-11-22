@@ -1,0 +1,9 @@
+﻿@page
+@model StreamingService.Controllers.RoomController.RoomIM
+@{
+}
+<form action="api/room" method="post">
+   @Html.TextBoxFor(m => m.Room )
+
+    <button type="submit"> Aceptar </button>
+    </form>

@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using SharedModels.RoomService;
+using StreamingService.Pages.Shared;
 
 namespace StreamingService.Controllers
 {
 	[Route("api/[controller]")]
-	[ApiController]
 	public class RoomController : ControllerBase
 	{
 		IConfiguration configuration;
@@ -24,7 +24,8 @@ namespace StreamingService.Controllers
 			this.httpClientFactory = clientFactory;
 		}
 
-		public async void GetRoom()
+		[HttpPost]
+		public async void GetRoom([FromForm] RoomIM Room)
 		{
 			var client = httpClientFactory.CreateClient();
 			var response = await client.GetAsync(configuration.GetValue<string>("RoomService") + "api/Participante/GetList");
@@ -32,6 +33,11 @@ namespace StreamingService.Controllers
 			var participantes = await JsonSerializer.DeserializeAsync
 				<List<Participante>>(responseStream);
 
+		}
+
+		public class RoomIM
+		{
+			public string Room { get; set; }
 		}
 	}
 }
