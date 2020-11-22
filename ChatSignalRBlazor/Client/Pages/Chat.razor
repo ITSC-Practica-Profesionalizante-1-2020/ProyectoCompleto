@@ -6,12 +6,12 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
-<div class="row" style="position:sticky; top:5px; background-color:white">
+<div class="row" style="position:sticky; top:5px; background: #d0c1ff">
     <div class="col-6">
-        <h2>Sala: @salaid </h2>
+        <h3>Sala: @salaid </h3>
     </div>
     <div class="col-auto">
-        <h2>Participante: @participanteid</h2>
+        <h3>Participante: @participanteid</h3>
     </div>
 
     <div class="col-auto">
@@ -55,7 +55,7 @@ else
 }
 
 <hr>
-<div class="row" style="position:sticky; bottom:5px; background-color:white">
+<div class="row" style="position:sticky; bottom:5px; background:inherit">
     <div class="col-md-10">
         <div class="form-group">
             <input for="Name" class="form-control" @bind="@mensajeCrea.Contenido" />
