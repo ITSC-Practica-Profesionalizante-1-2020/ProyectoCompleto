@@ -5,73 +5,47 @@
 }
 
 <div class="text-center">
-    <h1>WebCam Streaming Sample Application</h1>
+    <h5>WebCam Streaming Sample Application</h5>
 </div>
 
 
 
-<div class="row">
     <div class="col-12 text-center">
-        <button id="btnOpenCamera" class="btn btn-info mx-auto" data-state="closed">Open camera</button>
+        <button id="btnOpenCamera" class="btn btn-info mx-auto" data-state="closed">Iniciar Video</button>
     </div>
-    <div class="col-6">
-        <div class="card card-body bg-light m-2 h-100">
-            <div><p id="lblState">Ready to connect...</p></div>
-         
+   
 
-            <div class="d-lg-flex flex-row">
-
-                <div class="p-2 w-100">
-                    <input id="server" type="text" class="w-100" />
-                </div>
-                <div class="d-flex flex-row">
-                    <div class="m-2">
-                        <button id="btnConnect" type="submit" class="btn btn-info">Open Socket</button>
-                    </div>
-                    <div class="m-2">
-                        <button id="btnClose" class="btn btn-danger" disabled>Close Socket</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="text-center">
+        <input id="server" type="text" class="w-40" />
     </div>
-    <div class="col-6">
-        <div class="card card-body bg-light m-2 h-100">
-            <div class="d-flex">You:&nbsp;<p id="lblUser"></p></div>
-            <ul id="usersdata" class="list-group">
-                <li class="list-group-item">Other Online Users</li>
-                <li class="list-group-item user" data-cid="" data-username="">
-                    <a href="#">
-                        <div class="username"></div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>    
-</div>
 
-<div class="row">
-    <div class="col-4 m-2">
-        <div class="d-lg-flex flex-row">
-            <div class="col-5">
-                <h4>From client</h4>
-                <video id="video" autoplay></video> 
-            </div>
-            <div class="col-2"></div>
-            <div class="col-5">
-                <h4>From server</h4>
-                <img id="img" src="">
-            </div>
+    
+    <div class="float-right ">
+        <div>
+            <h4>From client</h4>
+            <video id="video" autoplay></video>
         </div>
-     
+
+        <div class="d-flex">You:&nbsp;<p id="lblUser"></p></div>
+        <ul id="usersdata" class="list-group">
+            <li class="list-group-item">Other Online Users</li>
+            <li class="list-group-item user" data-cid="" data-username="">
+                <a href="#">
+                    <div class="username"></div>
+                </a>
+            </li>
+        </ul>
     </div>
-    <div class="col-2"></div>
-    <div class="col-4 m-2">
+    
+
+
+
+
+    <div style="position:absolute;top:200px;left:0">
         <h4>From Server (SignalR)</h4>
         <img id="imgHub" src="">
     </div>
-</div>
+
 <div class="modal fade" id="callmodal" tabindex="-1" role="dialog" aria-labelledby="callmodaltitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

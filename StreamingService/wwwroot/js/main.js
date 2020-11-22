@@ -192,39 +192,39 @@ btnOpenCamera.onclick = function () {
     }
 };
 
-btnClose.onclick = function () {
-    if (!socket || socket.readyState !== WebSocket.OPEN) {
-        alert("WebSocket not connected.");
-    }
-    socket.close(1000, "Closing...");
-};
+//btnClose.onclick = function () {
+//    if (!socket || socket.readyState !== WebSocket.OPEN) {
+//        alert("WebSocket not connected.");
+//    }
+//    socket.close(1000, "Closing...");
+//};
 
-btnConnect.onclick = function () {
-    lblState.innerHTML = "Connecting...";
-    socket = new WebSocket(server.value);
-    socket.onopen = function (event) {
-        updateState();
-        lblState.innerHTML = `Connected to ${server.value}`;
-        setInterval(() => {
-            if (isOpen(socket)) {
-                var data = getVideoFrame();
-                socket.send(data);
-            }
-        }, 1000 / 6);
-    };
-    socket.onclose = function (event) {
-        updateState();
-    };
-    socket.onerror = updateState;
-    socket.onmessage = message => {
-        document.getElementById('img').src = '';
-        var image = new Image();
-        image.src = `data:image/jpeg;base64,${message.data}`;
-        document.getElementById('img').src = image.src;
+//btnConnect.onclick = function () {
+//    lblState.innerHTML = "Connecting...";
+//    socket = new WebSocket(server.value);
+//    socket.onopen = function (event) {
+//        updateState();
+//        lblState.innerHTML = `Connected to ${server.value}`;
+//        setInterval(() => {
+//            if (isOpen(socket)) {
+//                var data = getVideoFrame();
+//                socket.send(data);
+//            }
+//        }, 1000 / 6);
+//    };
+//    socket.onclose = function (event) {
+//        updateState();
+//    };
+//    socket.onerror = updateState;
+//    socket.onmessage = message => {
+//        document.getElementById('img').src = '';
+//        var image = new Image();
+//        image.src = `data:image/jpeg;base64,${message.data}`;
+//        document.getElementById('img').src = image.src;
 
 
-    }
-};
+//    }
+//};
 
 const updateState = () => {
     function disable() {
