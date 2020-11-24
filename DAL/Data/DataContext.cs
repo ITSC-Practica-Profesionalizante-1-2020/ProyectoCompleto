@@ -32,5 +32,6 @@ namespace DAL.Data
         public DbSet<Sala> Salas { get; set; }
         public DbSet<Asistencia> Asistencias { get; set; }
         public DbSet<SalaParticipante> SalaParticipante { get; set; }
+        public DbSet<UserEMPRESA> userEMPRESA { get; set; }
     }
 }

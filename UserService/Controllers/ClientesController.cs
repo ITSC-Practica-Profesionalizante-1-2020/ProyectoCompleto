@@ -43,15 +43,26 @@ namespace UserService.Controllers
             return cliente;
         }
 
+
+        // GET: api/Clientes/Validar/5
+        [HttpGet("validar/{email}")]
+        public async Task<ActionResult<Cliente>> GetCliente(string Email)
+        {
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(x=>x.IdentityUsuario.Email == Email);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return cliente;
+        }
+
         // PUT: api/Clientes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(string id, Cliente cliente)
         {
-            if (id.ToString().Equals(cliente.IdentityUsuario.Id))
-            {
-                return BadRequest();
-            }
-
+            cliente.DateModified = DateTime.Now;
             _context.Entry(cliente).State = EntityState.Modified;
 
             try
@@ -71,16 +82,6 @@ namespace UserService.Controllers
             }
 
             return NoContent();
-        }
-
-        // POST: api/Clientes
-        [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
-        {
-            _context.Clientes.Add(cliente);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCliente", new { id = cliente.IdentityUsuario.Id }, cliente);
         }
 
         // DELETE: api/Clientes/5

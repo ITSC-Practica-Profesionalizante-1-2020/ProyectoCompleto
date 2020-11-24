@@ -52,14 +52,19 @@ namespace RoomService.Controllers
 
         [Route("AddParticipante")]
         [HttpPost]
-        public void AgregarParticipanteASala(ParticipanteRequest entrada)
+        public async void AgregarParticipanteASala(ParticipanteRequest entrada)
         {
-            Cliente cliente = context.Clientes.FirstOrDefault(x => x.Id == entrada.IdCliente);
-            Sala sala = context.Salas.FirstOrDefault(x => x.Id == entrada.IdSala);
 
-            Participante participante = context.Participantes.FirstOrDefault(x => x.Cliente.Id == entrada.IdCliente);
+            Sala sala = context.Salas.FirstOrDefault(x => x.Id == entrada.IdSala);
+            Participante participante = context.Participantes.FirstOrDefault(x => x.Cliente.IdentityUsuario.Email == entrada.Correo);
+
+
+
             if (participante == null)
             {
+                ConsultarAPI consultarAPI = new ConsultarAPI();
+                Cliente cliente = await consultarAPI.GetClienteAsync("epolicardo@bancor.com.ar");
+
                 participante = new Participante
                 {
                     Rol = entrada.rol,
@@ -91,9 +96,8 @@ namespace RoomService.Controllers
 
     public class ParticipanteRequest
     {
-        public int IdCliente { get; set; }
+        public string Correo { get; set; }
         public int IdSala { get; set; }
         public Roles rol { get; set; }
     }
 }
-
