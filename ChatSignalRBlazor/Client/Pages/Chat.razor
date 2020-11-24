@@ -7,15 +7,15 @@
 @inject HttpClient Http
 
 <div class="row" style="position:sticky; top:0px; background-color: rgba(193,193,255,0.6); height:50px; padding-top:8px">
-    <div class="col-7">
-        <h3>Sala: @salaid </h3>
+    <div class="col-8">
+        <h1 style="font-size: 23px; font-weight:600">Sala: @salaid </h1>
     </div>
     <div class="col-auto">
-        <h3>Participante: @participanteid</h3>
+        <h1 style="font-size: 23px; font-weight:600">Participante: @participanteid</h1>
     </div>
 
     <div class="col-auto">
-        <input type="button" class="btn btn-danger" style="border-radius:30px" @onclick="NavegarIndex" value="Salir" />
+        <input type="button" class="btn btn-danger btn-sm" style="border-radius:30px; font-size:12px" @onclick="NavegarIndex" value="Salir" />
     </div>
 </div>
 
