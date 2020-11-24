@@ -27,6 +27,7 @@ namespace StreamingService.Controllers
 		[HttpPost]
 		public async Task<RedirectToPageResult> GetRoom([FromForm] RoomIM room)
 		{
+
 			try
 			{
 				var client = httpClientFactory.CreateClient();
@@ -35,6 +36,7 @@ namespace StreamingService.Controllers
 				var sala = await JsonSerializer.DeserializeAsync<
 					Sala>(responseStream);
 				return new RedirectToPageResult("/Index", new { name = sala.NombreSala });
+
 			}
 			catch (Exception)
 			{

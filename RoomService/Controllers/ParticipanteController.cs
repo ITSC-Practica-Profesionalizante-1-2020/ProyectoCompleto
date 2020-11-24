@@ -1,6 +1,7 @@
 ﻿using DAL.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SharedModels.RoomService;
 using SharedModels.UserService;
 using System;
@@ -27,10 +28,10 @@ namespace RoomService.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public ActionResult<IEnumerable<Sala>> Get([FromQuery] string name)
+        public string Get([FromQuery] string name)
         {
-            return context.Salas.Where(x => x.NombreSala == name).ToList();
-
+            var aa= context.Salas.First(x => x.NombreSala == name);
+            return JsonConvert.SerializeObject(aa);
         }
 
         [Route("PostCliente")]
@@ -42,7 +43,6 @@ namespace RoomService.Controllers
             context.Clientes.Add(cliente);
             context.SaveChanges();
             return "Ok";
-
         }
         [Route("AddPropietario")]
         [HttpPost]
