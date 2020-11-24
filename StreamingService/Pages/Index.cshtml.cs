@@ -4,15 +4,21 @@ namespace CameraStream.Pages
 {
     public class IndexModel : PageModel
     {
-
-        public IndexModel()
+		public string Name { get; set; }
+		public StreamingService.Controllers.RoomController.RoomIM Room { get; set; }
+		public IndexModel()
         {
 
         }
 
-        public void OnGet()
+        public void OnGet(string name)
         {
+            this.Name = name;
+        }
 
+        public void OnPostSubmit(StreamingService.Controllers.RoomController.RoomIM room)
+        {
+            this.Room = room;
         }
     }
 }

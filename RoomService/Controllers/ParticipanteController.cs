@@ -27,9 +27,9 @@ namespace RoomService.Controllers
 
         [Route("GetList")]
         [HttpGet]
-        public ActionResult<IEnumerable<Participante>> Get()
+        public ActionResult<IEnumerable<Sala>> Get([FromQuery] string name)
         {
-            return context.Participantes.ToList();
+            return context.Salas.Where(x => x.NombreSala == name).ToList();
 
         }
 

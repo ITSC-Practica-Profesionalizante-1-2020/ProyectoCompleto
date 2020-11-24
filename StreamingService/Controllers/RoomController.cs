@@ -25,19 +25,29 @@ namespace StreamingService.Controllers
 		}
 
 		[HttpPost]
-		public async void GetRoom([FromForm] RoomIM Room)
+		public async Task<RedirectToPageResult> GetRoom([FromForm] RoomIM room)
 		{
-			var client = httpClientFactory.CreateClient();
-			var response = await client.GetAsync(configuration.GetValue<string>("RoomService") + "api/Participante/GetList");
-			using var responseStream = await response.Content.ReadAsStreamAsync();
-			var participantes = await JsonSerializer.DeserializeAsync
-				<List<Participante>>(responseStream);
+			try
+			{
+				var client = httpClientFactory.CreateClient();
+				var response = await client.GetAsync(configuration.GetValue<string>("RoomService") + $"api/Participante/GetList/?name={room.Name}");
+				using var responseStream = await response.Content.ReadAsStreamAsync();
+				var sala = await JsonSerializer.DeserializeAsync<
+					Sala>(responseStream);
+				return new RedirectToPageResult("/Index", new { name = sala.NombreSala });
+			}
+			catch (Exception)
+			{
+
+				return new RedirectToPageResult("/Index", new { name = " sala publica" });
+			}
 
 		}
 
 		public class RoomIM
 		{
-			public string Room { get; set; }
+			[BindProperty]
+			public string Name { get; set; }
 		}
 	}
 }

@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "{name?}"
 @model CameraStream.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h5>WebCam Streaming Sample Application</h5>
+    <h5>@Model.Name</h5>
 </div>
 
 
