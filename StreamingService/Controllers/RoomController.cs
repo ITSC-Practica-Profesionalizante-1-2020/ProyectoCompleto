@@ -35,7 +35,8 @@ namespace StreamingService.Controllers
 				using var responseStream = await response.Content.ReadAsStreamAsync();
 				var sala = await JsonSerializer.DeserializeAsync<
 					Sala>(responseStream);
-				return new RedirectToPageResult("/Index", new { name = sala.NombreSala });
+				var asdfsa = sala.DateModified.ToString();
+				return new RedirectToPageResult("/Index", new { name = sala.NombreSala, pass = sala.PasswordSala, persist = sala.EsPersistente });
 
 			}
 			catch (Exception)

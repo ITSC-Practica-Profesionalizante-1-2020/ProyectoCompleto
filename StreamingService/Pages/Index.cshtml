@@ -1,4 +1,4 @@
-﻿@page "{name?}"
+﻿@page "{name?}/{date?}"
 @model CameraStream.Pages.IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -6,6 +6,9 @@
 
 <div class="text-center">
     <h5>@Model.Name</h5>
+    <label> Password: @Model.Password
+    </label>
+
 </div>
 
 
